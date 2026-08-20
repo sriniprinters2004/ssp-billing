@@ -1,0 +1,527 @@
+/* =====================================================
+   SSP BILLING SYSTEM
+   FINAL CSS
+===================================================== */
+
+
+/* =====================================================
+   BASIC RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #e9ecef;
+    padding: 20px;
+}
+
+
+/* =====================================================
+   MAIN BILL
+===================================================== */
+
+.bill-box {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #06245f;
+}
+
+
+/* =====================================================
+   COMPANY HEADER
+===================================================== */
+
+.company-header {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 160px);
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo-section {
+    width: 150px;
+    min-width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.company-logo {
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
+
+/* =====================================================
+   COMPANY DETAILS
+===================================================== */
+
+.company-details {
+    flex: 1 !important;
+    padding-left: 10px !important;
+    text-align: center !important;
+}
+
+.company-details h2 {
+    color: red !important;
+    font-family: "Cooper Black", Georgia, serif !important;
+    text-align: center !important;
+}
+
+.company-details p {
+    margin: 3px 0;
+    color: black !important;
+    font-family: Arial, sans-serif !important;
+    text-align: center !important;
+}
+/* =====================================================
+   BILL INFO
+===================================================== */
+
+.bill-info {
+    width: 150px;
+    min-width: 150px;
+    text-align: right;
+    font-size: 13px;
+    color: #222;
+}
+
+.bill-number {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+
+/* =====================================================
+   CUSTOMER
+===================================================== */
+
+.customer-section {
+    margin-top: 15px;
+}
+
+.customer-section label {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 3px;
+    font-weight: bold;
+    color: #001F5B;
+}
+
+.customer-section input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #777;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   ITEM TABLE
+===================================================== */
+
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    table-layout: fixed;
+}
+
+.item-table th {
+    background: #06245f;
+    color: white;
+    border: 1px solid #555;
+    padding: 8px;
+    text-align: center;
+    font-size: 14px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.item-table td {
+    border: 1px solid #777;
+    padding: 3px;
+}
+
+.item-table input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 7px;
+    font-size: 14px;
+    background: transparent;
+}
+
+.serial {
+    width: 45px;
+    text-align: center;
+}
+
+.description {
+    width: 50% !important;
+}
+
+.qty {
+    width: 15%;
+}
+
+.rate {
+    width: 15%;
+}
+
+.amount {
+    width: 20%;
+}
+
+.amount {
+    width: 20%;
+    text-align: right !important;
+}
+
+.amount-input {
+    background: #f3f3f3;
+    text-align: right !important;
+}
+
+.amount-input {
+    background: #f3f3f3 !important;
+}
+
+
+/* =====================================================
+   ADD ITEM BUTTON
+===================================================== */
+
+#addItemBtn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    border: none;
+    background: #06245f;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#addItemBtn:hover {
+    background: #0a357f;
+}
+
+
+/* =====================================================
+   TOTAL BOX
+===================================================== */
+
+.total-box {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px solid #001F5B;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 5px;
+    font-size: 17px;
+}
+
+.design-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.design-line input {
+    width: 150px !important;
+    text-align: right !important;
+    padding: 8px !important;
+    box-sizing: border-box;
+}
+
+/* =====================================================
+   SAVE / PRINT BUTTON
+===================================================== */
+
+#saveBillBtn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 11px;
+    border: none;
+    background: #06245f;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   /* =====================================================
+   PRINT - CURRENT BILL ONLY
+   BILL HISTORY MUST NOT PRINT
+===================================================== */
+
+@page {
+    size: A4 portrait;
+    margin: 10mm;
+}
+
+@media print {
+
+    /* ---------------------------------
+       PAGE
+    --------------------------------- */
+
+    html,
+    body {
+        width: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+
+
+    /* ---------------------------------
+       HIDE BILL HISTORY COMPLETELY
+    --------------------------------- */
+
+    .history-box,
+    .no-print,
+    #billSearch,
+    #billHistoryList,
+    .history-item,
+    .history-buttons,
+    .history-reprint-btn {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+
+    /* ---------------------------------
+       HIDE BUTTONS
+    --------------------------------- */
+
+    #addItemBtn,
+    #saveBillBtn,
+    button {
+        display: none !important;
+    }
+
+
+    /* ---------------------------------
+       SHOW CURRENT BILL ONLY
+    --------------------------------- */
+
+    #currentBill {
+        display: block !important;
+        visibility: visible !important;
+
+        width: 190mm !important;
+        max-width: 190mm !important;
+
+        margin: 0 auto !important;
+        padding: 0 !important;
+
+        border: none !important;
+        background: white !important;
+
+        box-shadow: none !important;
+
+        overflow: visible !important;
+    }
+
+
+    /* ---------------------------------
+       HEADER
+    --------------------------------- */
+
+    .bill-header {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    /* ---------------------------------
+       CUSTOMER
+    --------------------------------- */
+
+    .customer-section {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    /* =====================================
+   ITEM TABLE COLUMN WIDTH
+===================================== */
+
+.item-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse;
+}
+
+/* S.No */
+.item-table th:nth-child(1),
+.item-table td:nth-child(1) {
+    width: 8% !important;
+}
+
+/* Description */
+.item-table th:nth-child(2),
+.item-table td:nth-child(2) {
+    width: 50% !important;
+}
+
+/* Qty */
+.item-table th:nth-child(3),
+.item-table td:nth-child(3) {
+    width: 12% !important;
+}
+
+/* Rate */
+.item-table th:nth-child(4),
+.item-table td:nth-child(4) {
+    width: 15% !important;
+}
+
+/* Amount */
+.item-table th:nth-child(5),
+.item-table td:nth-child(5) {
+    width: 15% !important;
+}
+
+
+/* =====================================
+   INPUTS
+===================================== */
+
+.item-table td input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+
+/* Amount RIGHT ALIGN */
+.item-table td:nth-child(5) input {
+    text-align: right !important;
+}
+
+
+    /* ---------------------------------
+       TOTAL
+    --------------------------------- */
+
+    .total-box {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+
+    /* ---------------------------------
+       INPUTS
+    --------------------------------- */
+
+    input {
+        border: none !important;
+        background: transparent !important;
+    }
+
+
+    /* ---------------------------------
+       REMOVE EXTRA SPACE
+    --------------------------------- */
+
+    body {
+        overflow: visible !important;
+    }
+
+}
+
+/* =====================================
+   DESIGN CHARGE RIGHT ALIGN
+===================================== */
+
+.design-line {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.design-line span {
+    margin-right: auto !important;
+}
+
+#designCharge {
+    width: 150px !important;
+    text-align: right !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+}
+
+/* =====================================
+   FINAL ITEM TABLE WIDTH
+===================================== */
+
+.item-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
+.item-table th,
+.item-table td {
+    box-sizing: border-box !important;
+}
+
+.item-table td input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* AMOUNT RIGHT */
+.item-table td:nth-child(5) input {
+    text-align: right !important;
+}

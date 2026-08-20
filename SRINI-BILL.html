@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Srini Screen Printers Billing
+    </title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     CURRENT BILL
+===================================================== -->
+
+<div class="bill-box" id="currentBill">
+
+
+    <!-- =================================================
+         COMPANY HEADER
+    ================================================== -->
+
+    <div class="bill-header">
+
+        <div class="company-header">
+
+            <div class="logo-section">
+
+                <img
+                    src="assets/Srini Screen Printers.png"
+                    alt="Srini Screen Printers Logo"
+                    class="company-logo"
+                >
+
+            </div>
+
+
+            <div class="company-details">
+
+                <h2>
+                    Srini Screen Printers
+                </h2>
+
+                <p>
+                    Watrap Main Road, Melapolagam - 626116
+                </p>
+
+                <p>
+                    Virudhunagar Dt.
+                </p>
+
+                <p>
+                    <strong>Mobile:</strong>
+                    9095030858
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    sriniprinter2004@gmail.com
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- BILL NUMBER + DATE -->
+
+        <div class="bill-info">
+
+            <div class="bill-number">
+
+                Bill No:
+                <span id="billNumber"></span>
+
+            </div>
+
+            <div>
+
+                Date:
+                <span id="billDate"></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CUSTOMER
+    ================================================== -->
+
+    <div class="customer-section">
+
+        <label>
+            Customer Name:
+        </label>
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Customer Name"
+        >
+
+
+        <label>
+            Mobile:
+        </label>
+
+        <input
+            type="text"
+            id="customerMobile"
+            placeholder="Mobile Number"
+        >
+
+    </div>
+
+
+
+    <!-- =================================================
+         ITEM TABLE
+    ================================================== -->
+
+    <table class="item-table">
+
+    <colgroup>
+        <col style="width:8%;">
+        <col style="width:50%;">
+        <col style="width:12%;">
+        <col style="width:15%;">
+        <col style="width:15%;">
+    </colgroup>
+
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+
+    <tbody id="itemBody">
+
+        <tr class="item-row">
+
+            <td class="serial">
+                1
+            </td>
+
+            <td>
+                <input
+                    type="text"
+                    class="description"
+                    placeholder="Item / Work"
+                    onkeydown="handleDescriptionKey(event, this)"
+                >
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    class="qty"
+                    value=""
+                    oninput="calculateRow(this)"
+                    onkeydown="handleQtyKey(event, this)"
+                >
+            </td>
+
+            <td>
+                <input
+                    type="number"
+                    class="rate"
+                    value=""
+                    oninput="calculateRow(this)"
+                    onkeydown="handleRateKey(event, this)"
+                >
+            </td>
+
+            <td>
+                <input
+                    type="text"
+                    class="amount amount-input"
+                    value="0.00"
+                    readonly
+                >
+            </td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+
+
+    <!-- =================================================
+         ADD ITEM
+    ================================================== -->
+
+    <button
+        type="button"
+        id="addItemBtn"
+    >
+        + ADD ITEM
+    </button>
+
+
+
+    <!-- =================================================
+         BILL TOTAL
+    ================================================== -->
+
+    <div class="total-box">
+
+
+        <div class="total-line">
+
+            <span>
+                Printing Total:
+            </span>
+
+            <strong>
+                ₹
+                <span id="printingTotal">
+                    0.00
+                </span>
+            </strong>
+
+        </div>
+
+
+<div class="total-line design-line">
+
+    <span>
+        Design Charges:
+    </span>
+
+    <input
+        type="number"
+        id="designCharge"
+        value="500"
+        min="0"
+        step="0.01"
+        oninput="calculateTotal()"
+    >
+
+</div>
+
+        <div class="total-line net-line">
+
+            <strong>
+                Net Total:
+            </strong>
+
+            <strong>
+                ₹
+                <span id="netTotal">
+                    500.00
+                </span>
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PRINT / SAVE
+    ================================================== -->
+
+    <button
+        type="button"
+        id="saveBillBtn"
+        onclick="saveBill()"
+    >
+        Print / Save Bill
+    </button>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     BILL HISTORY
+===================================================== -->
+
+<div class="history-box no-print">
+
+    <h3>
+        📋 Bill History
+    </h3>
+
+
+    <input
+        type="text"
+        id="billSearch"
+        placeholder="Search Bill No / Customer Name / Mobile"
+    >
+
+
+    <div id="billHistoryList"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
