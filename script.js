@@ -21,23 +21,27 @@ document.addEventListener("DOMContentLoaded", function () {
     // ELEMENTS
     // ==================================================
 
-    const billDate =
-        document.getElementById("billDate");
+    const billData = {
 
-    const billNumber =
-        document.getElementById("billNumber");
+    billNo: billNo,
 
-    const designCharge =
-        document.getElementById("designCharge");
+    billDate: billDate,
 
-    const addItemBtn =
-        document.getElementById("addItemBtn");
+    customerName: customerName,
 
-    const itemBody =
-        document.getElementById("itemBody");
+    customerMobile: customerMobile,
 
-    const billSearch =
-        document.getElementById("billSearch");
+    items: items,
+
+    printingTotal: printingTotal,
+
+    designCharge: designCharge
+        ? parseFloat(designCharge.value) || 0
+        : 0,
+
+    netTotal: netTotal
+
+};
 
 
     // ==================================================
