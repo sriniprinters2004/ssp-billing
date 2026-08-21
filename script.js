@@ -1472,39 +1472,38 @@ window.addEventListener(
     }
 );
 
-new QRCode(document.getElementById("qrcode"), {
-    text: "SRINI SCREEN PRINTERS\n9095030858\nsriniprinter2004@gmail.com",
-    width: 80,
-    height: 80
-});
-
 // =====================================
 // UPI PAYMENT QR CODE
 // =====================================
 
 function generateQRCode() {
 
-    const qrElement = document.getElementById("qrcode");
+    const qrElement =
+        document.getElementById("qrcode");
 
     if (!qrElement) return;
 
-    // Get Net Total
-    const netTotalElement = document.getElementById("netTotal");
+    const netTotalElement =
+        document.getElementById("netTotal");
 
     let netTotal = 0;
 
     if (netTotalElement) {
-        netTotal = parseFloat(
-            netTotalElement.textContent.replace(/[₹,]/g, "")
-        ) || 0;
+
+        netTotal =
+            parseFloat(
+                netTotalElement.textContent
+                    .replace(/[₹,]/g, "")
+            ) || 0;
     }
 
-    // Clear old QR
     qrElement.innerHTML = "";
 
-    // UPI Payment Link
-    const upiId = "9095030858@sbi";
-    const payeeName = "SRINI SCREEN PRINTERS";
+    const upiId =
+        "9095030858@sbi";
+
+    const payeeName =
+        "SRINI SCREEN PRINTERS";
 
     const upiURL =
         "upi://pay" +
