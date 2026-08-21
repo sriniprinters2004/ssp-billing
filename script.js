@@ -21,27 +21,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // ELEMENTS
     // ==================================================
 
-    const billData = {
+    const billDate =
+        document.getElementById("billDate");
 
-    billNo: billNo,
+    const billNumber =
+        document.getElementById("billNumber");
 
-    billDate: billDate,
+    const designCharge =
+        document.getElementById("designCharge");
 
-    customerName: customerName,
+    const addItemBtn =
+        document.getElementById("addItemBtn");
 
-    customerMobile: customerMobile,
+    const itemBody =
+        document.getElementById("itemBody");
 
-    items: items,
-
-    printingTotal: printingTotal,
-
-    designCharge: designCharge
-        ? parseFloat(designCharge.value) || 0
-        : 0,
-
-    netTotal: netTotal
-
-};
+    const billSearch =
+        document.getElementById("billSearch");
 
 
     // ==================================================
@@ -84,98 +80,99 @@ document.addEventListener("DOMContentLoaded", function () {
 
         billNumber.textContent =
             "SSP-" +
-            String(currentBillNumber)
-                .padStart(4, "0");
+            String(currentBillNumber).padStart(4, "0");
     }
 
 
     // ==================================================
-    // CALCULATE TOTAL
+// CALCULATE TOTAL
+// ==================================================
+
+function calculateTotal() {
+
+    let printingTotal = 0;
+
+    document
+        .querySelectorAll(".item-row")
+        .forEach(function (row) {
+
+            const amount =
+                row.querySelector(".amount");
+
+            if (amount) {
+
+                printingTotal +=
+                    parseFloat(amount.value) || 0;
+            }
+
+        });
+
+
+    const design =
+        parseFloat(
+            designCharge?.value
+        ) || 0;
+
+
+    const netTotal =
+        printingTotal + design;
+
+
+    const printingElement =
+        document.getElementById("printingTotal");
+
+    const designDisplay =
+        document.getElementById("designChargeDisplay");
+
+    const netElement =
+        document.getElementById("netTotal");
+
+
+    if (printingElement) {
+
+        printingElement.textContent =
+            printingTotal.toFixed(2);
+    }
+
+
+    if (designDisplay) {
+
+        designDisplay.textContent =
+            design.toFixed(2);
+    }
+
+
+    if (netElement) {
+
+        netElement.textContent =
+            netTotal.toFixed(2);
+    }
+
+
+    // ==================================================
+    // UPDATE UPI QR CODE
     // ==================================================
 
-    function calculateTotal() {
-
-        let printingTotal = 0;
+    generateQRCode();
 
 
-        document
-            .querySelectorAll(".item-row")
-            .forEach(function (row) {
-
-                const amount =
-                    row.querySelector(".amount");
-
-                if (amount) {
-
-                    printingTotal +=
-                        parseFloat(amount.value) || 0;
-                }
-
-            });
+    console.log(
+        "Printing Total:",
+        printingTotal.toFixed(2)
+    );
 
 
-        const design =
-            parseFloat(
-                designCharge?.value
-            ) || 0;
+    console.log(
+        "Design Charges:",
+        design.toFixed(2)
+    );
 
 
-        const netTotal =
-            printingTotal + design;
-
-
-        const printingElement =
-            document.getElementById(
-                "printingTotal"
-            );
-
-        const designDisplay =
-            document.getElementById(
-                "designChargeDisplay"
-            );
-
-        const netElement =
-            document.getElementById(
-                "netTotal"
-            );
-
-
-        if (printingElement) {
-
-            printingElement.textContent =
-                printingTotal.toFixed(2);
-        }
-
-
-        if (designDisplay) {
-
-            designDisplay.textContent =
-                design.toFixed(2);
-        }
-
-
-        if (netElement) {
-
-            netElement.textContent =
-                netTotal.toFixed(2);
-        }
-
-
-        console.log(
-            "Printing Total:",
-            printingTotal.toFixed(2)
-        );
-
-        console.log(
-            "Design Charges:",
-            design.toFixed(2)
-        );
-
-        console.log(
-            "Net Total:",
-            netTotal.toFixed(2)
-        );
-    }
+    console.log(
+        "Net Total:",
+        netTotal.toFixed(2)
+    );
+}
 
 
     // ==================================================
@@ -200,9 +197,11 @@ document.addEventListener("DOMContentLoaded", function () {
             row.querySelector(".amount");
 
 
-        if (!qtyInput ||
+        if (
+            !qtyInput ||
             !rateInput ||
-            !amountInput) {
+            !amountInput
+        ) {
 
             return;
         }
@@ -234,9 +233,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateSerialNumbers() {
 
         const rows =
-            document.querySelectorAll(
-                ".item-row"
-            );
+            document.querySelectorAll(".item-row");
 
 
         rows.forEach(function (row, index) {
@@ -329,9 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         const rows =
-            document.querySelectorAll(
-                ".item-row"
-            );
+            document.querySelectorAll(".item-row");
 
 
         const lastRow =
@@ -359,9 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
             function () {
 
                 const rows =
-                    itemBody.querySelectorAll(
-                        ".item-row"
-                    );
+                    itemBody.querySelectorAll(".item-row");
 
 
                 if (rows.length === 0) {
@@ -382,8 +375,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     firstRow.cloneNode(true);
 
 
-                // Clear inputs
-
                 newRow
                     .querySelectorAll("input")
                     .forEach(function (input) {
@@ -393,23 +384,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
 
 
-                // Reset amount
-
                 const amount =
-                    newRow.querySelector(
-                        ".amount"
-                    );
+                    newRow.querySelector(".amount");
+
 
                 if (amount) {
 
-                    amount.value =
-                        "0.00";
+                    amount.value = "0.00";
                 }
 
 
-                itemBody.appendChild(
-                    newRow
-                );
+                itemBody.appendChild(newRow);
 
 
                 updateSerialNumbers();
@@ -418,9 +403,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 const description =
-                    newRow.querySelector(
-                        ".description"
-                    );
+                    newRow.querySelector(".description");
 
 
                 if (description) {
@@ -434,7 +417,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
             }
         );
-
     }
 
 
@@ -447,23 +429,16 @@ document.addEventListener("DOMContentLoaded", function () {
         function (event) {
 
             if (
-                event.target.classList.contains(
-                    "qty"
-                ) ||
-                event.target.classList.contains(
-                    "rate"
-                )
+                event.target.classList.contains("qty") ||
+                event.target.classList.contains("rate")
             ) {
 
-                calculateRow(
-                    event.target
-                );
+                calculateRow(event.target);
             }
 
 
             if (
-                event.target.id ===
-                "designCharge"
+                event.target.id === "designCharge"
             ) {
 
                 calculateTotal();
@@ -487,11 +462,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 )
             ) {
 
-                handleDescriptionKey(
-                    event
-                );
-            }
+                handleDescriptionKey(event);
 
+            }
 
             else if (
                 event.target.classList.contains(
@@ -499,11 +472,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 )
             ) {
 
-                handleQtyKey(
-                    event
-                );
-            }
+                handleQtyKey(event);
 
+            }
 
             else if (
                 event.target.classList.contains(
@@ -511,9 +482,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 )
             ) {
 
-                handleRateKey(
-                    event
-                );
+                handleRateKey(event);
+
             }
 
         }
@@ -531,29 +501,35 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        // ----------------------------------------------
+        // ------------------------------------------
         // BILL NUMBER
-        // ----------------------------------------------
+        // ------------------------------------------
 
         const billNo =
-            "SSP-" +
-            String(currentBillNumber)
-                .padStart(4, "0");
+            billNumber
+                ? billNumber.textContent.trim()
+                : "";
 
 
-        // ----------------------------------------------
+        // ------------------------------------------
+        // DATE
+        // ------------------------------------------
+
+        const date =
+            billDate
+                ? billDate.textContent.trim()
+                : "";
+
+
+        // ------------------------------------------
         // CUSTOMER
-        // ----------------------------------------------
+        // ------------------------------------------
 
         const customerNameElement =
-            document.getElementById(
-                "customerName"
-            );
+            document.getElementById("customerName");
 
         const customerMobileElement =
-            document.getElementById(
-                "customerMobile"
-            );
+            document.getElementById("customerMobile");
 
 
         const customerName =
@@ -568,19 +544,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 : "";
 
 
-        // ----------------------------------------------
-        // DATE
-        // ----------------------------------------------
-
-        const date =
-            billDate
-                ? billDate.textContent.trim()
-                : "";
-
-
-        // ----------------------------------------------
+        // ------------------------------------------
         // ITEMS
-        // ----------------------------------------------
+        // ------------------------------------------
 
         const items = [];
 
@@ -645,40 +611,37 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
 
+        
         // ----------------------------------------------
-        // TOTALS
-        // ----------------------------------------------
+// TOTALS
+// ----------------------------------------------
 
-        let printing = 0;
+let printing = 0;
 
+items.forEach(function (item) {
 
-        items.forEach(function (item) {
+    printing +=
+        Number(item.amount) || 0;
 
-            printing +=
-                Number(item.amount) || 0;
+});
 
-        });
+const design =
+    parseFloat(
+        designCharge?.value
+    ) || 0;
 
-
-        const design =
-            parseFloat(
-                designCharge?.value
-            ) || 0;
-
-
-        const net =
-            printing + design;
-
+const net =
+    printing + design;
 
         // ----------------------------------------------
-        // BILL DATA
-        // ----------------------------------------------
+// BILL DATA
+// ----------------------------------------------
 
-        const billData = {
+const billData = {
 
     billNo: billNo,
 
-    billDate: billDate,
+    billDate: date,
 
     customerName: customerName,
 
@@ -686,18 +649,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     items: items,
 
-    printingTotal: printingTotal,
+    printingTotal: printing,
 
-    designCharge: designCharge,
+    designCharge: design,
 
-    netTotal: netTotal
+    netTotal: net
 
 };
 
 
-        // ----------------------------------------------
+        // ------------------------------------------
         // GET EXISTING BILLS
-        // ----------------------------------------------
+        // ------------------------------------------
 
         let bills = [];
 
@@ -722,13 +685,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // ----------------------------------------------
+        // ------------------------------------------
         // SAVE
-        // ----------------------------------------------
+        // ------------------------------------------
 
-        bills.push(
-            billData
-        );
+        bills.push(billData);
 
 
         localStorage.setItem(
@@ -737,9 +698,9 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        // ----------------------------------------------
+        // ------------------------------------------
         // NEXT BILL NUMBER
-        // ----------------------------------------------
+        // ------------------------------------------
 
         currentBillNumber++;
 
@@ -750,71 +711,60 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        // ----------------------------------------------
+        // ------------------------------------------
         // REFRESH HISTORY
-        // ----------------------------------------------
+        // ------------------------------------------
 
         loadBillHistory();
 
 
-        // ----------------------------------------------
-        // SUCCESS
-        // ----------------------------------------------
+        // ------------------------------------------
+        // PDF FILE NAME
+        // ------------------------------------------
 
-        alert(
+        const safeCustomerName =
+            customerName
+                ? customerName.replace(
+                    /[\\/:*?"<>|]/g,
+                    ""
+                )
+                : "Customer";
+
+
+        document.title =
+            billNo +
+            " - " +
+            safeCustomerName +
+            " - " +
+            date;
+
+
+        // ------------------------------------------
+        // SUCCESS
+        // ------------------------------------------
+
+       alert(
     "பில் வெற்றிகரமாக சேமிக்கப்பட்டது!\n\n" +
     "Bill No: " + billNo + "\n" +
     "Net Total: ₹" +
-    net.toFixed(2)
+Number(net).toFixed(2)
 );
 
 
-// ==========================================
-// PDF FILE NAME
-// ==========================================
+        // ------------------------------------------
+        // PRINT
+        // ------------------------------------------
 
-const safeCustomerName =
-    customerName
-        ? customerName.replace(/[\\/:*?"<>|]/g, "")
-        : "Customer";
-
-document.title =
-    billNo +
-    " - " +
-    safeCustomerName +
-    " - " +
-    date;
+        window.print();
 
 
-// ==========================================
-// PRINT
-// ==========================================
-
-window.print();
-
-        // ----------------------------------------------
+        // ------------------------------------------
         // SHOW NEXT BILL NUMBER
-        // ----------------------------------------------
+        // ------------------------------------------
 
         showBillNumber();
 
     };
-
-
-    // ==================================================
-    // SHOW BILL NUMBER
-    // ==================================================
-
-    function showBillNumber() {
-
-        if (!billNumber) return;
-
-
-        billNumber.textContent =
-            "SSP-" +
-            String(currentBillNumber)
-                .padStart(4, "0");
-    }
 
 
     // ==================================================
@@ -902,10 +852,6 @@ window.print();
             }
 
 
-            // ------------------------------------------
-            // NO BILL
-            // ------------------------------------------
-
             if (bills.length === 0) {
 
                 historyList.innerHTML =
@@ -914,10 +860,6 @@ window.print();
                 return;
             }
 
-
-            // ------------------------------------------
-            // NEWEST FIRST
-            // ------------------------------------------
 
             bills
                 .slice()
@@ -946,7 +888,9 @@ window.print();
 
                         Date:
                         ${escapeHTML(
-                            bill.date || ""
+                            bill.billDate ||
+                            bill.date ||
+                            ""
                         )}
 
                         <br>
@@ -986,10 +930,6 @@ window.print();
                     `;
 
 
-                    // ----------------------------------
-                    // CLICK BILL
-                    // ----------------------------------
-
                     div.addEventListener(
                         "click",
                         function (event) {
@@ -1004,17 +944,11 @@ window.print();
                             }
 
 
-                            showBillDetails(
-                                bill
-                            );
+                            showBillDetails(bill);
 
                         }
                     );
 
-
-                    // ----------------------------------
-                    // REPRINT BUTTON
-                    // ----------------------------------
 
                     const reprintButton =
                         div.querySelector(
@@ -1030,18 +964,14 @@ window.print();
 
                                 event.stopPropagation();
 
-                                reprintBill(
-                                    bill
-                                );
+                                reprintBill(bill);
 
                             }
                         );
                     }
 
 
-                    historyList.appendChild(
-                        div
-                    );
+                    historyList.appendChild(div);
 
                 });
 
@@ -1092,16 +1022,12 @@ window.print();
             ) {
 
                 bill.items.forEach(
-                    function (
-                        item,
-                        index
-                    ) {
+                    function (item, index) {
 
                         itemsText +=
 
                             (index + 1) +
                             ". " +
-
                             item.description +
 
                             " | Qty: " +
@@ -1109,12 +1035,12 @@ window.print();
 
                             " | Rate: ₹" +
                             Number(
-                                item.rate
+                                item.rate || 0
                             ).toFixed(2) +
 
                             " | Amount: ₹" +
                             Number(
-                                item.amount
+                                item.amount || 0
                             ).toFixed(2) +
 
                             "\n";
@@ -1137,7 +1063,11 @@ window.print();
                 (bill.billNo || "") +
 
                 "\nDate: " +
-                (bill.date || "") +
+                (
+                    bill.billDate ||
+                    bill.date ||
+                    ""
+                ) +
 
                 "\nCustomer: " +
                 (bill.customerName || "N/A") +
@@ -1188,54 +1118,44 @@ window.print();
             );
 
 
-            // ------------------------------------------
-            // LOAD OLD BILL INTO CURRENT BILL
-            // ------------------------------------------
+            loadBillIntoCurrentBill(bill);
 
-            loadBillIntoCurrentBill(
-                bill
-            );
-
-
-            // ------------------------------------------
-            // PRINT
-            // ------------------------------------------
 
             setTimeout(
                 function () {
 
-                    // ==========================================
-// PDF / PRINT FILE NAME
-// ==========================================
+                    const customerForFile =
+                        bill.customerName
+                            ? bill.customerName.replace(
+                                /[\\/:*?"<>|]/g,
+                                ""
+                            )
+                            : "Customer";
 
-const customerForFile =
-    customer
-        ? customer.replace(/[\\/:*?"<>|]/g, "")
-        : "Customer";
 
-const pdfFileName =
-    billNo + " - " + customerForFile;
+                    document.title =
+                        bill.billNo +
+                        " - " +
+                        customerForFile;
 
-document.title = pdfFileName;
 
-window.print();
+                    window.print();
 
                 },
-                100
+                300
             );
-
         };
 
 
     // ==================================================
-    // LOAD BILL INTO CURRENT BILL
+    // LOAD OLD BILL
     // ==================================================
 
     function loadBillIntoCurrentBill(bill) {
 
-        // ----------------------------------------------
+        // ------------------------------------------
         // BILL NUMBER
-        // ----------------------------------------------
+        // ------------------------------------------
 
         if (billNumber) {
 
@@ -1244,40 +1164,51 @@ window.print();
         }
 
 
-        // ----------------------------------------------
+        // ------------------------------------------
         // DATE
-        // ----------------------------------------------
+        // ------------------------------------------
 
         if (billDate) {
 
             billDate.textContent =
-                bill.date || "";
+                bill.billDate ||
+                bill.date ||
+                "";
         }
 
 
         // ------------------------------------------
-// CUSTOMER DETAILS
-// ------------------------------------------
+        // CUSTOMER
+        // ------------------------------------------
 
-const customerNameElement =
-    document.getElementById("customerName");
+        const customerNameElement =
+            document.getElementById(
+                "customerName"
+            );
 
-const customerMobileElement =
-    document.getElementById("customerMobile");
+        const customerMobileElement =
+            document.getElementById(
+                "customerMobile"
+            );
 
-const customerName =
-    customerNameElement
-        ? customerNameElement.value.trim()
-        : "";
 
-const customerMobile =
-    customerMobileElement
-        ? customerMobileElement.value.trim()
-        : "";
+        if (customerNameElement) {
 
-        // ----------------------------------------------
+            customerNameElement.value =
+                bill.customerName || "";
+        }
+
+
+        if (customerMobileElement) {
+
+            customerMobileElement.value =
+                bill.customerMobile || "";
+        }
+
+
+        // ------------------------------------------
         // ITEMS
-        // ----------------------------------------------
+        // ------------------------------------------
 
         if (!itemBody) return;
 
@@ -1349,9 +1280,7 @@ const customerMobile =
                     `;
 
 
-                    itemBody.appendChild(
-                        row
-                    );
+                    itemBody.appendChild(row);
 
                 }
             );
@@ -1362,16 +1291,20 @@ const customerMobile =
 
         }
 
+// ----------------------------------------------
+// DESIGN CHARGES
+// ----------------------------------------------
 
-        // ----------------------------------------------
-        // DESIGN CHARGES
-        // ----------------------------------------------
+if (designCharge) {
 
-        if (designCharge) {
+    designCharge.value =
+        Number(bill.designCharge) || 0;
 
-            designCharge.value =
-                bill.designCharge || 0;
-        }
+    console.log(
+        "🖨️ Reprint Design Charge:",
+        designCharge.value
+    );
+}
 
 
         updateSerialNumbers();
@@ -1437,9 +1370,7 @@ const customerMobile =
         `;
 
 
-        itemBody.appendChild(
-            row
-        );
+        itemBody.appendChild(row);
     }
 
 
@@ -1530,11 +1461,6 @@ window.addEventListener(
         );
 
 
-        // ----------------------------------------------
-        // If old bill was reprinted,
-        // return to normal new bill
-        // ----------------------------------------------
-
         if (isReprinting) {
 
             isReprinting = false;
@@ -1546,222 +1472,60 @@ window.addEventListener(
     }
 );
 
-// ======================================================
-// SAVE + PRINT BILL
-// ======================================================
+new QRCode(document.getElementById("qrcode"), {
+    text: "SRINI SCREEN PRINTERS\n9095030858\nsriniprinter2004@gmail.com",
+    width: 80,
+    height: 80
+});
 
-window.saveBill = function () {
+// =====================================
+// UPI PAYMENT QR CODE
+// =====================================
 
-    // ------------------------------------------
-    // GET BILL DETAILS
-    // ------------------------------------------
+function generateQRCode() {
 
-    const billNumberElement =
-        document.getElementById("billNumber");
+    const qrElement = document.getElementById("qrcode");
 
-    const billDateElement =
-        document.getElementById("billDate");
+    if (!qrElement) return;
 
-    const customerNameElement =
-        document.getElementById("customerName");
+    // Get Net Total
+    const netTotalElement = document.getElementById("netTotal");
 
-    const customerMobileElement =
-        document.getElementById("customerMobile");
+    let netTotal = 0;
 
-    const printingTotalElement =
-        document.getElementById("printingTotal");
-
-    const designChargeElement =
-        document.getElementById("designCharge");
-
-    const netTotalElement =
-        document.getElementById("netTotal");
-
-
-    // ------------------------------------------
-    // VALUES
-    // ------------------------------------------
-
-    const billNo =
-        billNumberElement
-            ? billNumberElement.textContent.trim()
-            : "";
-
-    const billDate =
-        billDateElement
-            ? billDateElement.textContent.trim()
-            : "";
-
-    const customerName =
-        customerNameElement
-            ? customerNameElement.value.trim()
-            : "";
-
-    const customerMobile =
-        customerMobileElement
-            ? customerMobileElement.value.trim()
-            : "";
-
-    const printingTotal =
-        printingTotalElement
-            ? printingTotalElement.textContent.trim()
-            : "0.00";
-
-    const designCharge =
-        designChargeElement
-            ? designChargeElement.value.trim()
-            : "0";
-
-    const netTotal =
-        netTotalElement
-            ? netTotalElement.textContent.trim()
-            : "0.00";
-
-
-    // ------------------------------------------
-    // GET ITEMS
-    // ------------------------------------------
-
-    const items = [];
-
-    document
-        .querySelectorAll(".item-row")
-        .forEach(function (row) {
-
-            const description =
-                row.querySelector(".description");
-
-            const qty =
-                row.querySelector(".qty");
-
-            const rate =
-                row.querySelector(".rate");
-
-            const amount =
-                row.querySelector(".amount");
-
-
-            if (
-                description &&
-                description.value.trim() !== ""
-            ) {
-
-                items.push({
-
-                    description:
-                        description.value.trim(),
-
-                    qty:
-                        qty ? qty.value : "",
-
-                    rate:
-                        rate ? rate.value : "",
-
-                    amount:
-                        amount ? amount.value : "0.00"
-
-                });
-
-            }
-
-        });
-
-
-    // ------------------------------------------
-    // BILL DATA
-    // ------------------------------------------
-
-    const billData = {
-
-        billNo: billNo,
-
-        billDate: billDate,
-
-        customerName: customerName,
-
-        customerMobile: customerMobile,
-
-        items: items,
-
-        printingTotal: printingTotal,
-
-        designCharge: designCharge,
-
-        netTotal: netTotal
-
-    };
-
-
-    // ------------------------------------------
-    // SAVE TO LOCAL STORAGE
-    // ------------------------------------------
-
-    let bills = [];
-
-    try {
-
-        bills =
-            JSON.parse(
-                localStorage.getItem("sspBills")
-            ) || [];
-
-    } catch (error) {
-
-        bills = [];
-
+    if (netTotalElement) {
+        netTotal = parseFloat(
+            netTotalElement.textContent.replace(/[₹,]/g, "")
+        ) || 0;
     }
 
+    // Clear old QR
+    qrElement.innerHTML = "";
 
-    bills.push(billData);
+    // UPI Payment Link
+    const upiId = "9095030858@sbi";
+    const payeeName = "SRINI SCREEN PRINTERS";
 
+    const upiURL =
+        "upi://pay" +
+        "?pa=" + encodeURIComponent(upiId) +
+        "&pn=" + encodeURIComponent(payeeName) +
+        "&am=" + netTotal.toFixed(2) +
+        "&cu=INR";
 
-    localStorage.setItem(
-        "sspBills",
-        JSON.stringify(bills)
-    );
+    new QRCode(qrElement, {
+        text: upiURL,
+        width: 90,
+        height: 90
+    });
+}
 
+// =====================================
+// GENERATE QR WHEN PAGE LOADS
+// =====================================
 
-    // ------------------------------------------
-    // PDF / PRINT FILE NAME
-    // ------------------------------------------
+document.addEventListener("DOMContentLoaded", function () {
 
-    const safeCustomerName =
-        customerName
-            .replace(/[\\/:*?"<>|]/g, "")
-            .replace(/\s+/g, "_");
+    generateQRCode();
 
-
-    const pdfFileName =
-        billNo +
-        "_" +
-        (safeCustomerName || "Customer") +
-        "_" +
-        billDate.replace(/-/g, "") +
-        ".pdf";
-
-
-    // ------------------------------------------
-    // SHOW PDF FILE NAME
-    // ------------------------------------------
-
-    document.title = pdfFileName;
-
-
-    // ------------------------------------------
-    // UPDATE HISTORY
-    // ------------------------------------------
-
-    if (typeof loadBillHistory === "function") {
-
-        loadBillHistory();
-
-    }
-
-
-    // ------------------------------------------
-    // PRINT
-    // ------------------------------------------
-
-    window.print();
-
-};
+});

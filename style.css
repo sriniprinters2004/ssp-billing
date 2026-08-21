@@ -297,7 +297,6 @@ body {
 }
 
 
-/* =====================================================
    /* =====================================================
    PRINT - CURRENT BILL ONLY
    BILL HISTORY MUST NOT PRINT
@@ -524,4 +523,38 @@ body {
 /* AMOUNT RIGHT */
 .item-table td:nth-child(5) input {
     text-align: right !important;
+}
+
+/* =====================================
+   QR + FOR PROPRIETOR
+===================================== */
+
+.bill-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 15px;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.qr-section {
+    width: 100px;
+    text-align: left;
+}
+
+#qrcode {
+    width: 90px;
+    height: 90px;
+}
+
+.proprietor-section {
+    flex: 1;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.for-text {
+    font-weight: bold;
+    font-size: 15px;
 }
