@@ -1,1 +1,70 @@
+name: Build SSP Billing Windows App
 
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Electron
+        run: npm install --prefix desktop electron electron-builder
+
+      - name: Create main.js
+        shell: pwsh
+        run: |
+          @'
+          const { app, BrowserWindow } = require("electron");
+          const path = require("path");
+
+          function createWindow() {
+              const win = new BrowserWindow({
+                  width: 1200,
+                  height: 800,
+                  minWidth: 900,
+                  minHeight: 650,
+                  webPreferences: {
+                      contextIsolation: true,
+                      nodeIntegration: false
+                  }
+              });
+
+              win.loadFile(path.join(__dirname, "..", "index.html"));
+              win.setMenuBarVisibility(false);
+          }
+
+          app.whenReady().then(() => {
+              createWindow();
+
+              app.on("activate", () => {
+                  if (BrowserWindow.getAllWindows().length === 0) {
+                      createWindow();
+                  }
+              });
+          });
+
+          app.on("window-all-closed", () => {
+              if (process.platform !== "darwin") {
+                  app.quit();
+              }
+          });
+          '@ | Set-Content -Path desktop/main.js
+
+      - name: Build Windows EXE
+        run: npx electron-builder --win --x64
+        working-directory: desktop
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: SSP-Billing-Windows
+          path: desktop/dist/*.exe
