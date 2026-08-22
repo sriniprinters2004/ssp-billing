@@ -19,6 +19,14 @@ jobs:
       - name: Install Electron
         run: npm install --prefix desktop electron electron-builder
 
+      - name: Copy Billing Files
+        shell: pwsh
+        run: |
+          Copy-Item index.html desktop/index.html -Force
+          Copy-Item style.css desktop/style.css -Force
+          Copy-Item script.js desktop/script.js -Force
+          Copy-Item company-logo.png desktop/company-logo.png -Force
+
       - name: Create main.js
         shell: pwsh
         run: |
@@ -38,7 +46,7 @@ jobs:
                   }
               });
 
-              win.loadFile(path.join(__dirname, "..", "index.html"));
+              win.loadFile(path.join(__dirname, "index.html"));
               win.setMenuBarVisibility(false);
           }
 
